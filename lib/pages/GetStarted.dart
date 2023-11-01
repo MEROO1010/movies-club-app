@@ -29,7 +29,11 @@ class _Splsh_screenState extends State<GetStarted> {
         Padding(
           padding: EdgeInsets.only(left: 150, top: 100),
           child: Container(
-            child: ElevatedButton(onPressed: () {}, child: Text('Get Started')),
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/SignUp');
+                },
+                child: Text('Get Started')),
           ),
         )
       ],

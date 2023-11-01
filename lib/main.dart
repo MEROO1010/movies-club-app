@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:movies_club/auth/SignIn.dart';
+import 'package:movies_club/auth/SignUp.dart';
 import 'package:movies_club/pages/GetStarted.dart';
 
 void main() {
@@ -8,6 +10,9 @@ void main() {
     initialRoute: '/',
     routes: {
       '/': ((context) => splash_screen()),
+      '/GetStarted': ((context) => GetStarted()),
+      '/SignIn': ((context) => SignIn()),
+      '/SignUp': ((context) => SignUp()),
     },
   ));
 }
