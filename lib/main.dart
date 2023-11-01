@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:movies_club/auth/SignIn.dart';
 import 'package:movies_club/auth/SignUp.dart';
 import 'package:movies_club/pages/GetStarted.dart';
+import 'package:movies_club/pages/Homepage.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -13,6 +14,7 @@ void main() {
       '/GetStarted': ((context) => GetStarted()),
       '/SignIn': ((context) => SignIn()),
       '/SignUp': ((context) => SignUp()),
+      '/Homepage': ((context) => HomePage()),
     },
   ));
 }
