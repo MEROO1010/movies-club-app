@@ -14,7 +14,7 @@ void main() {
       '/GetStarted': ((context) => GetStarted()),
       '/SignIn': ((context) => SignIn()),
       '/SignUp': ((context) => SignUp()),
-      '/Homepage': ((context) => HomePage()),
+      '/Homepage': ((context) => MoviesScreen()),
     },
   ));
 }

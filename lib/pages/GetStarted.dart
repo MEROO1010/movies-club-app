@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({super.key});
@@ -25,23 +24,48 @@ class _Splsh_screenState extends State<GetStarted> {
           padding: EdgeInsets.only(left: 110, top: 180),
         ),
 
-        //add button
+        //add sign-in button
         Padding(
-          padding: EdgeInsets.only(left: 100, top: 140),
+          padding: EdgeInsets.only(left: 100, top: 80),
           child: Container(
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/SignUp');
+                  Navigator.pushNamed(context, '/SignIn');
                 },
                 child: Text(
-                  'Get Started',
+                  'Sign-In',
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Color.fromRGBO(255, 255, 255, 1)),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(67, 96, 115, 1),
+                    primary: Color.fromRGBO(118, 147, 165, 1),
+                    shadowColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                    minimumSize: Size(225, 50))),
+          ),
+        ),
+
+        //add sign-up button
+        Padding(
+          padding: EdgeInsets.only(left: 100, top: 40),
+          child: Container(
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/SignUp');
+                },
+                child: Text(
+                  'Sign-Up',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(255, 255, 255, 1)),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(40, 66, 89, 1),
                     shadowColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0),
