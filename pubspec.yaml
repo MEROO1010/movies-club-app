@@ -41,6 +41,9 @@ dependencies:
   google_nav_bar: ^5.0.6
   sliding_clipped_nav_bar: ^3.1.0+4
   molten_navigationbar_flutter: ^1.0.1
+  google_fonts: ^4.0.4
+  flutter_custom_carousel_slider: ^1.2.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
