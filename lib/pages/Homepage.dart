@@ -7,7 +7,7 @@ import 'package:movies_club/model/movies.dart';
 class MoviesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return ListView(
       children: [
         Container(
           color: Color.fromRGBO(26, 30, 38, 1),
@@ -17,20 +17,22 @@ class MoviesScreen extends StatelessWidget {
             'What do you want to watch?',
             style: TextStyle(
                 fontFamily: 'Roboto',
-                fontSize: 20,
+                fontSize: 18,
                 color: Colors.white,
                 decoration: TextDecoration.none),
           ),
-          padding: EdgeInsets.only(left: 30, top: 40),
+          padding: EdgeInsets.only(left: 30, top: 36),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 28, left: 30),
+          padding: EdgeInsets.only(top: 18, left: 30),
           child: Container(
-            width: 320,
-            height: 50,
+            margin: EdgeInsets.only(right: 30),
+            height: 48,
             child: Material(
+              borderRadius: BorderRadius.circular(40),
               child: TextField(
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(12),
                   prefixIcon: Icon(Icons.search),
                   hintText: 'Search..',
                   filled: true,
@@ -49,7 +51,7 @@ class MoviesScreen extends StatelessWidget {
               child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(18),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -91,6 +93,39 @@ class MoviesScreen extends StatelessWidget {
                         const SizedBox(height: 32),
                         Text(
                           'Top rated movies',
+                          style: GoogleFonts.roboto(
+                              fontSize: 20,
+                              textStyle: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Colors.white,
+                              )),
+                        ),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: 10,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    color: Colors.amber,
+                                    height: 200,
+                                    width: 150,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        Text(
+                          'Upcoming movies',
                           style: GoogleFonts.roboto(
                               fontSize: 20,
                               textStyle: TextStyle(
