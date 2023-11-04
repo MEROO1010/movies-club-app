@@ -5,8 +5,14 @@ import 'package:movies_club/auth/SignIn.dart';
 import 'package:movies_club/auth/SignUp.dart';
 import 'package:movies_club/pages/GetStarted.dart';
 import 'package:movies_club/pages/Homepage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -14,7 +20,7 @@ void main() {
       '/GetStarted': ((context) => GetStarted()),
       '/SignIn': ((context) => SignIn()),
       '/SignUp': ((context) => SignUp()),
-      '/Homepage': ((context) => MoviesScreen()),
+      '/Homepage': ((context) => MovieScreen()),
     },
   ));
 }

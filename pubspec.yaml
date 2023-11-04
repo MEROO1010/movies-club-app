@@ -38,12 +38,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   another_flutter_splash_screen: ^1.2.0
   hexcolor: ^3.0.1
-  google_nav_bar: ^5.0.6
   sliding_clipped_nav_bar: ^3.1.0+4
-  molten_navigationbar_flutter: ^1.0.1
   google_fonts: ^4.0.4
   flutter_custom_carousel_slider: ^1.2.0
   carousel_slider: ^4.2.1
+  firebase_auth: ^4.12.1
+  firebase_core: ^2.21.0
 
 dev_dependencies:
   flutter_test:

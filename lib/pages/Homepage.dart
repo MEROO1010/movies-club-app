@@ -1,11 +1,30 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movies_club/model/fetch_movies.dart';
+import 'package:movies_club/api_service/api.dart';
 import 'package:movies_club/model/movies.dart';
+import 'package:movies_club/widgets/movieslider.dart';
+import 'package:movies_club/widgets/trendingslider.dart';
 
-class MoviesScreen extends StatelessWidget {
+class MovieScreen extends StatefulWidget {
+  const MovieScreen({super.key});
+
   @override
+  State<MovieScreen> createState() => _MovieScreenState();
+}
+
+class _MovieScreenState extends State<MovieScreen> {
+  late Future<List<Movie>> trendingMovies;
+  late Future<List<Movie>> topRatedMovies;
+  late Future<List<Movie>> upcomingMovies;
+
+  @override
+  void initState() {
+    super.initState();
+    trendingMovies = Api().getTrendingMovies();
+    topRatedMovies = Api().getTopRatedMovies();
+    upcomingMovies = Api().getUpcomingMovies();
+  }
+
   Widget build(BuildContext context) {
     return ListView(
       children: [
@@ -49,119 +68,120 @@ class MoviesScreen extends StatelessWidget {
           children: [
             Container(
               child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Trending Movies',
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              textStyle: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  color: Colors.white)),
-                        ),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: CarouselSlider.builder(
-                              itemCount: 10,
-                              options: CarouselOptions(
-                                  height: 300,
-                                  autoPlay: true,
-                                  viewportFraction: 0.55,
-                                  enlargeCenterPage: true,
-                                  pageSnapping: true,
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  autoPlayAnimationDuration:
-                                      const Duration(seconds: 2)),
-                              itemBuilder: (context, itemIndex, pageViewIndex) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Container(
-                                    height: 300,
-                                    width: 200,
-                                    color: Colors.amber,
-                                  ),
-                                );
-                              }),
-                        ),
-                        const SizedBox(height: 32),
-                        Text(
-                          'Top rated movies',
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              textStyle: TextStyle(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Trending Movies',
+                        style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            textStyle: TextStyle(
                                 decoration: TextDecoration.none,
-                                color: Colors.white,
-                              )),
-                        ),
-                        const SizedBox(height: 32),
-                        SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Container(
-                                    color: Colors.amber,
-                                    height: 200,
-                                    width: 150,
-                                  ),
-                                ),
+                                color: Colors.white)),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      // const TrendingSlider(),
+                      SizedBox(
+                        child: FutureBuilder(
+                          future: trendingMovies,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text(snapshot.error.toString()));
+                            } else if (snapshot.hasData) {
+                              return TrendingSlider(
+                                snapshot: snapshot,
                               );
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        Text(
-                          'Upcoming movies',
-                          style: GoogleFonts.roboto(
-                              fontSize: 20,
-                              textStyle: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.white,
-                              )),
-                        ),
-                        const SizedBox(height: 32),
-                        SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Container(
-                                    color: Colors.amber,
-                                    height: 200,
-                                    width: 150,
-                                  ),
-                                ),
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
-                            },
-                          ),
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                  )),
-            ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        'Top rated movies',
+                        style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            textStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Colors.white,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+
+                      SizedBox(
+                        child: FutureBuilder(
+                          future: topRatedMovies,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text(snapshot.error.toString()));
+                            } else if (snapshot.hasData) {
+                              return MovieSlider(
+                                snapshot: snapshot,
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        'Upcoming movies',
+                        style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            textStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Colors.white,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      // const MovieSlider(),
+                      SizedBox(
+                        child: FutureBuilder(
+                          future: upcomingMovies,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text(snapshot.error.toString()));
+                            } else if (snapshot.hasData) {
+                              return MovieSlider(
+                                snapshot: snapshot,
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
-        )
+        ),
       ],
     );
   }

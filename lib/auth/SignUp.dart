@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -8,6 +9,24 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
+
+  String _email = "";
+  String _password = "";
+  void _handleSignUp() async {
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: _email, password: _password);
+
+      print("User Registered: | ${userCredential.user!.email}");
+    } catch (e) {
+      print("Error During Registration: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Wrap(children: [
@@ -52,6 +71,7 @@ class _SignUpState extends State<SignUp> {
           width: 340,
           child: Material(
             child: TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(16),
                 prefixIcon: Icon(Icons.email_rounded),
@@ -74,6 +94,7 @@ class _SignUpState extends State<SignUp> {
           width: 340,
           child: Material(
             child: TextField(
+              controller: _passController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(16),
                 prefixIcon: Icon(Icons.visibility_off_outlined),
@@ -95,7 +116,9 @@ class _SignUpState extends State<SignUp> {
         child: Container(
           child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/Homepage');
+                if (_formKey.currentState!.validate()) {
+                  _handleSignUp();
+                }
               },
               child: Text(
                 'Sign-Up',

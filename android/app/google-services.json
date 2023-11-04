@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188305800686",
+    "project_id": "movies-club-8233e",
+    "storage_bucket": "movies-club-8233e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188305800686:android:d5767274f78ca04b20e2ff",
+        "android_client_info": {
+          "package_name": "com.example.movies_club"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZGUe0-mv5b335e-68297N5_pBP9qpRsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
