@@ -4,6 +4,7 @@ import 'package:movies_club/api_service/api.dart';
 import 'package:movies_club/model/movies.dart';
 import 'package:movies_club/widgets/movieslider.dart';
 import 'package:movies_club/widgets/trendingslider.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({super.key});
@@ -179,6 +180,49 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                 ),
               ),
+            ),
+            //nav-button
+            Padding(
+              padding: EdgeInsets.only(top: 490),
+              child: GNav(
+                  backgroundColor: Colors.white,
+                  rippleColor: Colors.white,
+                  haptic: true, // haptic feedback
+                  tabBorderRadius: 15,
+                  tabBorder: Border.all(
+                      color: Colors.grey, width: 1), // tab button border
+                  tabShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5), blurRadius: 8)
+                  ], // tab button shadow
+                  curve: Curves.easeOutExpo, // tab animation curves
+                  duration:
+                      Duration(milliseconds: 900), // tab animation duration
+                  gap: 40, // the tab button gap between icon and text
+                  color: Colors.grey[800], // unselected icon color
+                  activeColor: Colors.purple, // selected icon and text color
+                  iconSize: 24, // tab button icon size
+                  tabBackgroundColor: Colors.purple
+                      .withOpacity(0.1), // selected tab background color
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  tabs: [
+                    GButton(
+                      icon: Icons.home_filled,
+                      text: 'Home',
+                      backgroundColor: Colors.amber,
+                      onPressed: () {},
+                    ),
+                    GButton(
+                      icon: Icons.bookmark_border,
+                      text: 'Watch List',
+                      backgroundColor: Colors.amber,
+                    ),
+                    GButton(
+                      icon: Icons.search,
+                      text: 'search',
+                      backgroundColor: Colors.amber,
+                    )
+                  ]),
             )
           ],
         ),
