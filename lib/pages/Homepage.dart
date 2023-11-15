@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_club/api_service/api.dart';
 import 'package:movies_club/model/movies.dart';
+import 'package:movies_club/pages/Search.dart';
 import 'package:movies_club/widgets/movieslider.dart';
 import 'package:movies_club/widgets/trendingslider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -185,8 +186,8 @@ class _MovieScreenState extends State<MovieScreen> {
             Padding(
               padding: EdgeInsets.only(top: 490),
               child: GNav(
-                  backgroundColor: Colors.white,
-                  rippleColor: Colors.white,
+                  backgroundColor: Color.fromRGBO(67, 96, 115, 1),
+                  rippleColor: Color.fromRGBO(67, 96, 115, 1),
                   haptic: true, // haptic feedback
                   tabBorderRadius: 15,
                   tabBorder: Border.all(
@@ -198,30 +199,36 @@ class _MovieScreenState extends State<MovieScreen> {
                   curve: Curves.easeOutExpo, // tab animation curves
                   duration:
                       Duration(milliseconds: 900), // tab animation duration
-                  gap: 40, // the tab button gap between icon and text
+                  gap: 8, // the tab button gap between icon and text
                   color: Colors.grey[800], // unselected icon color
-                  activeColor: Colors.purple, // selected icon and text color
+                  activeColor: Colors.white, // selected icon and text color
                   iconSize: 24, // tab button icon size
-                  tabBackgroundColor: Colors.purple
-                      .withOpacity(0.1), // selected tab background color
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  tabBackgroundColor:
+                      Colors.white, // selected tab background color
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   tabs: [
                     GButton(
                       icon: Icons.home_filled,
                       text: 'Home',
-                      backgroundColor: Colors.amber,
+                      backgroundColor: Color.fromRGBO(26, 30, 38, 1),
                       onPressed: () {},
                     ),
                     GButton(
                       icon: Icons.bookmark_border,
                       text: 'Watch List',
-                      backgroundColor: Colors.amber,
+                      backgroundColor: Color.fromRGBO(26, 30, 38, 1),
                     ),
                     GButton(
-                      icon: Icons.search,
-                      text: 'search',
-                      backgroundColor: Colors.amber,
-                    )
+                        icon: Icons.search,
+                        text: 'search',
+                        backgroundColor: Color.fromRGBO(26, 30, 38, 1),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Search()),
+                          );
+                        })
                   ]),
             )
           ],

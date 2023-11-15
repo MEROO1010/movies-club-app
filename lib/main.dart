@@ -6,6 +6,8 @@ import 'package:movies_club/auth/SignUp.dart';
 import 'package:movies_club/pages/GetStarted.dart';
 import 'package:movies_club/pages/Homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:movies_club/pages/Search.dart';
+import 'package:movies_club/pages/Watchlist.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -21,6 +23,8 @@ void main() async {
       '/SignIn': ((context) => SignIn()),
       '/SignUp': ((context) => SignUp()),
       '/Homepage': ((context) => MovieScreen()),
+      '/Search': (context) => Search(),
+      './Watchlist': (context) => Watchlist(),
     },
   ));
 }
