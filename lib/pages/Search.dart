@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies_club/api_service/api.dart';
+import 'package:movies_club/model/movies.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -8,7 +10,20 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  late Future<List<Movie>> trendingMovies;
+  late Future<List<Movie>> topRatedMovies;
+  late Future<List<Movie>> upcomingMovies;
+
   @override
+  void initState() {
+    super.initState();
+    trendingMovies = Api().getTrendingMovies();
+    topRatedMovies = Api().getTopRatedMovies();
+    upcomingMovies = Api().getUpcomingMovies();
+  }
+
+  List<Movie> _movies = [];
+
   Widget build(BuildContext context) {
     return Wrap(
       children: [
@@ -46,6 +61,19 @@ class _SearchState extends State<Search> {
                 ),
               ),
             ),
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _movies.length,
+            itemBuilder: (context, index) {
+              final movie = _movies[index];
+              return ListTile(
+                title: Text(movie.title),
+                subtitle: Text(movie.overview),
+                leading: Image.network(movie.posterPath),
+              );
+            },
           ),
         ),
       ],
