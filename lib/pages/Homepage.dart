@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_club/api_service/api.dart';
 import 'package:movies_club/model/movies.dart';
-import 'package:movies_club/pages/Search.dart';
+import 'package:movies_club/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:movies_club/widgets/movieslider.dart';
 import 'package:movies_club/widgets/trendingslider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MovieScreen extends StatefulWidget {
   const MovieScreen({super.key});
@@ -18,6 +21,19 @@ class _MovieScreenState extends State<MovieScreen> {
   late Future<List<Movie>> trendingMovies;
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _signOut() async {
+    try {
+      await _auth.signOut();
+      // Navigate to the sign-in page or any other desired page
+      // Example:
+      Navigator.pushReplacementNamed(context, '/SignIn');
+    } catch (e) {
+      print('Error signing out: $e');
+      // Handle any error that occurred during sign out
+    }
+  }
 
   @override
   void initState() {
@@ -25,6 +41,26 @@ class _MovieScreenState extends State<MovieScreen> {
     trendingMovies = Api().getTrendingMovies();
     topRatedMovies = Api().getTopRatedMovies();
     upcomingMovies = Api().getUpcomingMovies();
+  }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    final url = Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?api_key=${Constants.apiKey}&query=$query');
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final moviesData = jsonData['results'] as List<dynamic>;
+
+      List<Movie> movies = moviesData.map((movieData) {
+        return Movie.fromJson(movieData);
+      }).toList();
+
+      return movies;
+    } else {
+      throw Exception('Failed to search movies');
+    }
   }
 
   Widget build(BuildContext context) {
@@ -47,7 +83,7 @@ class _MovieScreenState extends State<MovieScreen> {
         Padding(
           padding: EdgeInsets.only(top: 18, left: 30),
           child: Container(
-            margin: EdgeInsets.only(right: 30),
+            margin: EdgeInsets.only(right: 20),
             height: 48,
             child: Material(
               borderRadius: BorderRadius.circular(40),
@@ -219,15 +255,11 @@ class _MovieScreenState extends State<MovieScreen> {
                       backgroundColor: Color.fromRGBO(26, 30, 38, 1),
                     ),
                     GButton(
-                        icon: Icons.search,
-                        text: 'search',
+                        icon: Icons.person,
+                        text: 'profile',
                         backgroundColor: Color.fromRGBO(26, 30, 38, 1),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Search()),
-                          );
+                          _signOut();
                         })
                   ]),
             )
