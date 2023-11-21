@@ -8,6 +8,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Wrap(children: [
@@ -52,9 +54,19 @@ class _SignInState extends State<SignIn> {
           width: 340,
           child: Material(
             child: TextField(
+              obscureText: _obscureText,
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      textDirection: TextDirection.rtl),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
                 contentPadding: EdgeInsets.all(16),
-                prefixIcon: Icon(Icons.visibility_off_outlined),
                 hintText: 'Password',
                 filled: true,
                 fillColor: Color.fromRGBO(255, 255, 255, 1),

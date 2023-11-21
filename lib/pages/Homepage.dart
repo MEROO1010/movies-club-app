@@ -35,6 +35,21 @@ class _MovieScreenState extends State<MovieScreen> {
     }
   }
 
+  TextEditingController _searchController = TextEditingController();
+  List<Movie> searchResults = [];
+
+  void _performSearch(String query) {
+    if (query.isNotEmpty) {
+      searchMovies(query).then((movies) {
+        setState(() {
+          searchResults = movies;
+        });
+      }).catchError((error) {
+        print('Error searching movies: $error');
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +78,12 @@ class _MovieScreenState extends State<MovieScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return ListView(
       children: [
@@ -88,6 +109,8 @@ class _MovieScreenState extends State<MovieScreen> {
             child: Material(
               borderRadius: BorderRadius.circular(40),
               child: TextField(
+                controller: _searchController,
+                onSubmitted: _performSearch,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(12),
                   prefixIcon: Icon(Icons.search),
