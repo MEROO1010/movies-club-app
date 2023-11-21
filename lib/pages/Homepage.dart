@@ -33,22 +33,11 @@ class _MovieScreenState extends State<MovieScreen> {
       // Handle any error that occurred during sign out
     }
   }
-    bool _obscureText = true;
+
+  bool _obscureText = true;
 
   TextEditingController _searchController = TextEditingController();
   List<Movie> searchResults = [];
-
-  void _performSearch(String query) {
-    if (query.isNotEmpty) {
-      searchMovies(query).then((movies) {
-        setState(() {
-          searchResults = movies;
-        });
-      }).catchError((error) {
-        print('Error searching movies: $error');
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -56,10 +45,8 @@ class _MovieScreenState extends State<MovieScreen> {
     trendingMovies = Api().getTrendingMovies();
     topRatedMovies = Api().getTopRatedMovies();
     upcomingMovies = Api().getUpcomingMovies();
-   
   }
 
-  
   @override
   void dispose() {
     _searchController.dispose();
@@ -92,7 +79,7 @@ class _MovieScreenState extends State<MovieScreen> {
               borderRadius: BorderRadius.circular(40),
               child: TextField(
                 controller: _searchController,
-                onSubmitted: _performSearch,
+                // onSubmitted: _performSearch,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(12),
                   prefixIcon: Icon(Icons.search),
