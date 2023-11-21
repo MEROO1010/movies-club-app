@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_club/api_service/api.dart';
 import 'package:movies_club/model/movies.dart';
 import 'package:movies_club/constants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:movies_club/widgets/movieslider.dart';
 import 'package:movies_club/widgets/trendingslider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -21,6 +19,7 @@ class _MovieScreenState extends State<MovieScreen> {
   late Future<List<Movie>> trendingMovies;
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
+  late Future<List<Movie>> serachMovies;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void _signOut() async {
@@ -34,6 +33,7 @@ class _MovieScreenState extends State<MovieScreen> {
       // Handle any error that occurred during sign out
     }
   }
+    bool _obscureText = true;
 
   TextEditingController _searchController = TextEditingController();
   List<Movie> searchResults = [];
@@ -56,28 +56,10 @@ class _MovieScreenState extends State<MovieScreen> {
     trendingMovies = Api().getTrendingMovies();
     topRatedMovies = Api().getTopRatedMovies();
     upcomingMovies = Api().getUpcomingMovies();
+   
   }
 
-  Future<List<Movie>> searchMovies(String query) async {
-    final url = Uri.parse(
-        'https://api.themoviedb.org/3/search/movie?api_key=${Constants.apiKey}&query=$query');
-
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      final moviesData = jsonData['results'] as List<dynamic>;
-
-      List<Movie> movies = moviesData.map((movieData) {
-        return Movie.fromJson(movieData);
-      }).toList();
-
-      return movies;
-    } else {
-      throw Exception('Failed to search movies');
-    }
-  }
-
+  
   @override
   void dispose() {
     _searchController.dispose();
