@@ -1,14 +1,12 @@
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
 import 'package:movies_club/auth/SignIn.dart';
 import 'package:movies_club/auth/SignUp.dart';
 import 'package:movies_club/pages/Homepage.dart';
 import 'package:movies_club/pages/Search.dart';
 import 'package:movies_club/pages/Watchlist.dart';
 import 'package:movies_club/pages/getStarted.dart';
-import 'dart:ui';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
