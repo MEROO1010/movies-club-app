@@ -1,0 +1,3 @@
+[submodule "master-2"]
+	path = master-2
+	url = https://github.com/MEROO1010/movies-club-app.git
